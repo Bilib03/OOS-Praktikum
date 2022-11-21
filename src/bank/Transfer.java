@@ -1,63 +1,110 @@
 package bank;
 
-public class Transfer {
-    //Variablen
-    private String date;
-    private String description;
+public class Transfer extends Transaction {
+    /**
+     *  private attribut sender
+     */
     private String sender;
+    /**
+     *  private attribut recipient
+     */
     private String recipient;
-    private double amount;
 
-    //Getter
-    public String get_date() {return date;}
-    public String get_description() {return description;}
+    /**
+     * @return sender attribut
+     */
     public String get_sender(){return sender;}
-    public String get_recipient(){return recipient;}
-    public double get_amount() {return amount;}
-
-    //Setter
-    public void set_date(String tempdate){date=tempdate;}
-    public void set_description(String tempdesc){description=tempdesc;}
+    /**
+     * sets the value of the private attribut sender
+     * @param new sender value
+     */
     public void set_sender(String tempsend){sender=tempsend;}
+
+    /**
+     * @return recipient attribut
+     */
+    public String get_recipient(){return recipient;}
+    /**
+     * sets the value of the private attribut recipient
+     * @param new recipient value
+     */
     public void set_recipient(String temprec){recipient=temprec;}
+
+    /**
+     * sets the value of the protected attribut amount
+     * @param new amount value must be greater than 0
+     */
     public void set_amount(double tempamount)
     {
         if(tempamount>=0) amount = tempamount;
         else System.out.println("Es werden nur Positive werte als Amount akzeptiert. Wert bleibt gleich");
     }
 
+    /**
+     * constructs new Transfer Object
+     * @param temp_date
+     * @param temp_description
+     * @param temp_amount must be greater than 0
+     */
     //Konstruktor
     public Transfer(String temp_date, String temp_description, double temp_amount)
     {
-        date=temp_date;
-        description=temp_description;
-        if(temp_amount>=0) amount = temp_amount;
-        else System.out.println("Es werden nur Positive werte als Amount akzeptiert. Wert wird auf 0 gesetzt");
+        super(temp_date,temp_description,temp_amount);
     }
+
+    /**
+     * @param temp_date
+     * @param temp_description
+     * @param temp_amount must be greater than 0
+     * @param temp_sender
+     * @param temp_recipient
+     */
     public Transfer(String temp_date, String temp_description, double temp_amount, String temp_sender, String temp_recipient)
     {
         this(temp_date,temp_description,temp_amount);
-        recipient=temp_recipient;
-        sender=temp_sender;
+        set_recipient(temp_recipient);
+        set_sender(temp_sender);
     }
 
-    //Copy-Konstruktor
+    /**
+     * @param Constructs new Tranfer Object identical to param x
+     */
     public Transfer(Transfer x)
     {
-        date=x.date;
-        amount=x.amount;
-        description=x.description;
+        super(x);
         sender=x.sender;
         recipient=x.recipient;
     }
 
-    //Methode
-    public void printObject()
+    /**
+     * @return Returns all Variables in a String
+     */
+    @Override
+    public String toString()
     {
-        System.out.println(date);
-        System.out.println(description);
-        System.out.println(amount);
-        System.out.println(sender);
-        System.out.println(recipient +"\r\n");
+        return (super.toString()+"  Sender "+ sender+"     Recipient "+ recipient);
     }
+
+    /**
+     * @return Calculated amount
+     */
+    @Override
+    public double calculate() {
+        return amount;
+    }
+
+    /**
+     * Compares param temp Object with itself
+     * @param temp_obj
+     * @return returns true if all values are identical
+     */
+    @Override
+    public boolean equals(Object temp_obj)
+    {
+        Transfer obj=(Transfer) temp_obj;
+        if(super.equals(obj)&&sender.equals(obj.get_sender())&&recipient.equals(get_recipient()))return true;
+        return false;
+    }
+
+
 }

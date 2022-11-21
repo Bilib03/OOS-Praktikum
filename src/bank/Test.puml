@@ -1,0 +1,14 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+abstract class Transaction
+interface CalculateBill
+class Transfer
+class Payment
+
+Payment <|-- Transaction
+Transfer <|-- Transaction
+class Transfer{
+toString()
+~ int amount
+}
+@enduml
